@@ -50,7 +50,7 @@ if alpha_sr == alpha_ri == alpha_rs == alpha_rd == 0:
 #generate more data with standard augmentation
 def gen_eda(file_path, alpha_sr, alpha_ri, alpha_rs, alpha_rd, num_aug=9):
     train_df = pd.read_csv(file_path, header=None)
-    train_df = train_df.sample(n=chunk_size)
+    train_df = train_df[0:chunk_size]
     for i in range(1, len(train_df)):
         label = train_df[0][i]
         sentence = train_df[1][i]
