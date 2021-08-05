@@ -46,15 +46,13 @@ if alpha_sr == alpha_ri == alpha_rs == alpha_rd == 0:
 #generate more data with standard augmentation
 def gen_eda(file_path, alpha_sr, alpha_ri, alpha_rs, alpha_rd, num_aug=9):
     train_df = train = pd.read_csv(file_path, header=None)
-    augmented_df = pd.DataFrame()
     for i in range(1, len(train_df)):
         label = train_df[0][i]
         sentence = train_df[1][i]
         aug_sentences = eda(sentence, alpha_sr=alpha_sr, alpha_ri=alpha_ri, alpha_rs=alpha_rs, p_rd=alpha_rd, num_aug=num_aug)
-        augmented_df[i][0] = label
-        augmented_df[i][1] = aug_sentences
+        train_df.append([label, aug_sentences])
     # concatenate
-    train_df.append(augmented_df)
+    
     # shuffle
     train_df.shuffle(frac=1)
     # save csv
