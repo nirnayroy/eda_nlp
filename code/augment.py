@@ -7,7 +7,7 @@ import pandas as pd
 #arguments to be parsed from command line
 import argparse
 ap = argparse.ArgumentParser()
-ap.add_argument("--input_df", required=True, type=pd.DataFrame, help="input dataframe of unaugmented data")
+ap.add_argument("--input_file_path", required=True, type=str, help="input dataframe of unaugmented data")
 ap.add_argument("--num_aug", required=False, type=int, help="number of augmented sentences per original sentence")
 ap.add_argument("--alpha_sr", required=False, type=float, help="percent of words in each sentence to be replaced by synonyms")
 ap.add_argument("--alpha_ri", required=False, type=float, help="percent of words in each sentence to be inserted")
@@ -44,8 +44,9 @@ if alpha_sr == alpha_ri == alpha_rs == alpha_rd == 0:
      ap.error('At least one alpha should be greater than zero')
 
 #generate more data with standard augmentation
-def gen_eda(train_df, alpha_sr, alpha_ri, alpha_rs, alpha_rd, num_aug=9):
-    augmented_df = pd.DataFrame()
+def gen_eda(file_path, alpha_sr, alpha_ri, alpha_rs, alpha_rd, num_aug=9):
+    train_df = train = pd.read_csv(file_path, header=None)
+    augmented_df = pd.DataFrame(header=None)
     for i in range(train_df.shape[0]):
         label = train_df[i][0]
         sentence = train_df[i][1]
@@ -62,6 +63,6 @@ def gen_eda(train_df, alpha_sr, alpha_ri, alpha_rs, alpha_rd, num_aug=9):
 
 #main function
 if __name__ == "__main__":
-
+    
     #generate augmented sentences and output into a new file
-    gen_eda(args.input_df, alpha_sr=alpha_sr, alpha_ri=alpha_ri, alpha_rs=alpha_rs, alpha_rd=alpha_rd, num_aug=num_aug)
+    gen_eda(args.input_file_path, alpha_sr=alpha_sr, alpha_ri=alpha_ri, alpha_rs=alpha_rs, alpha_rd=alpha_rd, num_aug=num_aug)
