@@ -62,7 +62,7 @@ def gen_eda(file_path, output_file, alpha_sr, alpha_ri, alpha_rs, alpha_rd, num_
     # shuffle
     train_df.sample(frac=1).reset_index(drop=True)
     # save csv
-    train_df.to_csv(output_file)
+    train_df.to_csv(output_file, header=False, index=False)
     print("sucess!!")
 
 #main function
