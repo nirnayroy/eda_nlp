@@ -157,7 +157,7 @@ def add_word(new_words):
 	synonyms = []
 	counter = 0
 	while len(synonyms) < 1:
-		random_word = new_words[random.randint(0, len(new_words)-1)]
+		random_word = new_words[random.randint(0, len(new_words))]
 		synonyms = get_synonyms(random_word)
 		counter += 1
 		if counter >= 10:
