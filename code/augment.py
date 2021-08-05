@@ -7,7 +7,8 @@ import pandas as pd
 #arguments to be parsed from command line
 import argparse
 ap = argparse.ArgumentParser()
-ap.add_argument("--input_file_path", required=True, type=str, help="input dataframe of unaugmented data")
+ap.add_argument("--input_file_path", required=True, type=str, help="input csv of unaugmented data")
+ap.add_argument("--output_file_name", required=True, type=str, help="output csv of augmented data")
 ap.add_argument("--chunk_size", required=False, type=int, help="number of samples from input file to augment")
 ap.add_argument("--num_aug", required=False, type=int, help="number of augmented sentences per original sentence")
 ap.add_argument("--alpha_sr", required=False, type=float, help="percent of words in each sentence to be replaced by synonyms")
@@ -48,7 +49,7 @@ if alpha_sr == alpha_ri == alpha_rs == alpha_rd == 0:
      ap.error('At least one alpha should be greater than zero')
 
 #generate more data with standard augmentation
-def gen_eda(file_path, alpha_sr, alpha_ri, alpha_rs, alpha_rd, num_aug=9):
+def gen_eda(file_path, output_file, alpha_sr, alpha_ri, alpha_rs, alpha_rd, num_aug=9):
     train_df = pd.read_csv(file_path, header=None)
     train_df = train_df[0:chunk_size]
     for i in range(1, len(train_df)):
@@ -61,11 +62,11 @@ def gen_eda(file_path, alpha_sr, alpha_ri, alpha_rs, alpha_rd, num_aug=9):
     # shuffle
     train_df.sample(frac=1).reset_index(drop=True)
     # save csv
-    train_df.to_csv('/content/augmented_data.csv')
+    train_df.to_csv(output_file)
     print("sucess!!")
 
 #main function
 if __name__ == "__main__":
     
     #generate augmented sentences and output into a new file
-    gen_eda(args.input_file_path, alpha_sr=alpha_sr, alpha_ri=alpha_ri, alpha_rs=alpha_rs, alpha_rd=alpha_rd, num_aug=num_aug)
+    gen_eda(args.input_file_path, args.output_file_name, alpha_sr=alpha_sr, alpha_ri=alpha_ri, alpha_rs=alpha_rs, alpha_rd=alpha_rd, num_aug=num_aug)
