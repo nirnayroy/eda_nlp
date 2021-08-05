@@ -61,7 +61,7 @@ def gen_eda(file_path, alpha_sr, alpha_ri, alpha_rs, alpha_rd, num_aug=9):
     # shuffle
     train_df.sample(frac=1).reset_index(drop=True)
     # save csv
-    train_df.to_csv('augmented_data.csv')
+    train_df.to_csv('/content/augmented_data.csv')
     print("sucess!!")
 
 #main function
