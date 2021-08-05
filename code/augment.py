@@ -46,7 +46,7 @@ if alpha_sr == alpha_ri == alpha_rs == alpha_rd == 0:
 #generate more data with standard augmentation
 def gen_eda(file_path, alpha_sr, alpha_ri, alpha_rs, alpha_rd, num_aug=9):
     train_df = train = pd.read_csv(file_path, header=None)
-    augmented_df = pd.DataFrame(header=None)
+    augmented_df = pd.DataFrame()
     for i in range(train_df.shape[0]):
         label = train_df[i][0]
         sentence = train_df[i][1]
