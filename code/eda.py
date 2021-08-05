@@ -182,33 +182,35 @@ def eda(sentence, alpha_sr=0.1, alpha_ri=0.1, alpha_rs=0.1, p_rd=0.1, num_aug=9)
 	
 	augmented_sentences = []
 	num_new_per_technique = int(num_aug/4)+1
+	if num_words>0:
+		#sr
+		if (alpha_sr > 0):
+			n_sr = max(1, int(alpha_sr*num_words))
+			for _ in range(num_new_per_technique):
+				a_words = synonym_replacement(words, n_sr)
+				augmented_sentences.append(' '.join(a_words))
 
-	#sr
-	if (alpha_sr > 0):
-		n_sr = max(1, int(alpha_sr*num_words))
-		for _ in range(num_new_per_technique):
-			a_words = synonym_replacement(words, n_sr)
-			augmented_sentences.append(' '.join(a_words))
+		#ri
+		if (alpha_ri > 0):
+			n_ri = max(1, int(alpha_ri*num_words))
+			for _ in range(num_new_per_technique):
+				a_words = random_insertion(words, n_ri)
+				augmented_sentences.append(' '.join(a_words))
 
-	#ri
-	if (alpha_ri > 0):
-		n_ri = max(1, int(alpha_ri*num_words))
-		for _ in range(num_new_per_technique):
-			a_words = random_insertion(words, n_ri)
-			augmented_sentences.append(' '.join(a_words))
+		#rs
+		if (alpha_rs > 0):
+			n_rs = max(1, int(alpha_rs*num_words))
+			for _ in range(num_new_per_technique):
+				a_words = random_swap(words, n_rs)
+				augmented_sentences.append(' '.join(a_words))
 
-	#rs
-	if (alpha_rs > 0):
-		n_rs = max(1, int(alpha_rs*num_words))
-		for _ in range(num_new_per_technique):
-			a_words = random_swap(words, n_rs)
-			augmented_sentences.append(' '.join(a_words))
-
-	#rd
-	if (p_rd > 0):
-		for _ in range(num_new_per_technique):
-			a_words = random_deletion(words, p_rd)
-			augmented_sentences.append(' '.join(a_words))
+		#rd
+		if (p_rd > 0):
+			for _ in range(num_new_per_technique):
+				a_words = random_deletion(words, p_rd)
+				augmented_sentences.append(' '.join(a_words))
+	else:
+		pass
 
 	augmented_sentences = [get_only_chars(sentence) for sentence in augmented_sentences]
 	shuffle(augmented_sentences)
