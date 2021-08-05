@@ -52,17 +52,18 @@ if alpha_sr == alpha_ri == alpha_rs == alpha_rd == 0:
 def gen_eda(file_path, output_file, alpha_sr, alpha_ri, alpha_rs, alpha_rd, num_aug=9):
     train_df = pd.read_csv(file_path, header=None)
     train_df = train_df[0:chunk_size]
+    augmented_list = []
     for i in range(1, len(train_df)):
         label = train_df[0][i]
         sentence = train_df[1][i]
         aug_sentences = eda(sentence, alpha_sr=alpha_sr, alpha_ri=alpha_ri, alpha_rs=alpha_rs, p_rd=alpha_rd, num_aug=num_aug)
-        train_df.append([label, aug_sentences])
+        augmented_list.append([label, aug_sentences])
     # concatenate
-    
+    train_df = train_df.append(augmented_list, ignore_index=True)
     # shuffle
     train_df.sample(frac=1).reset_index(drop=True)
     # save csv
-    train_df.to_csv(output_file, header=False, index=False)
+    train_df.to_csv(output_file, index=False)
     print("sucess!!")
 
 #main function
