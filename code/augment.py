@@ -7,7 +7,7 @@ import pandas as pd
 #arguments to be parsed from command line
 import argparse
 ap = argparse.ArgumentParser()
-ap.add_argument("--input_df", required=True, type=str, help="input dataframe of unaugmented data")
+ap.add_argument("--input_df", required=True, type=pd.DataFrame, help="input dataframe of unaugmented data")
 ap.add_argument("--num_aug", required=False, type=int, help="number of augmented sentences per original sentence")
 ap.add_argument("--alpha_sr", required=False, type=float, help="percent of words in each sentence to be replaced by synonyms")
 ap.add_argument("--alpha_ri", required=False, type=float, help="percent of words in each sentence to be inserted")
