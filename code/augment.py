@@ -53,6 +53,8 @@ def gen_eda(train_df, alpha_sr, alpha_ri, alpha_rs, alpha_rd, num_aug=9):
         augmented_df[i][0] = label
         augmented_df[i][1] = aug_sentences
     # concatenate
+    train_df.append(augmented_df)
+    # shuffle
     # save csv
     print("generated augmented sentences with eda for " + train_orig + " to " + output_file + " with num_aug=" + str(num_aug))
 
